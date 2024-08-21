@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "NicoNico",
+  "version": "1.0",
+  "permissions": ["activeTab", "scripting", "background"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}
