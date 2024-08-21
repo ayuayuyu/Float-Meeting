@@ -1,7 +1,7 @@
 let websocket;
 
 chrome.runtime.onInstalled.addListener(() => {
-  websocket = new WebSocket(propcess.env.URL);
+  websocket = new WebSocket("wss://fastapi-websocket-ww61.onrender.com/ws/");
 
   websocket.onopen = () => {
     console.log("WebSocket connection opened");
