@@ -3,6 +3,10 @@ let websocket;
 chrome.runtime.onInstalled.addListener(() => {
   websocket = new WebSocket("wss://fastapi-websocket-ww61.onrender.com/ws/");
 
+  websocket.onopen = () => {
+    console.log("WebSocket connection opened");
+  };
+
   websocket.onmessage = (event) => {
     const data = JSON.parse(event.data);
     if (data.type === "comment") {
@@ -17,14 +21,27 @@ chrome.runtime.onInstalled.addListener(() => {
       });
     }
   };
+
+  websocket.onerror = (error) => {
+    console.error("WebSocket error:", error);
+  };
+
+  websocket.onclose = () => {
+    console.log("WebSocket connection closed");
+  };
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === "comment") {
-    websocket.send(
-      JSON.stringify({ type: "comment", comment: request.comment })
-    );
-    sendResponse({ status: "sent" });
+    if (websocket && websocket.readyState === WebSocket.OPEN) {
+      websocket.send(
+        JSON.stringify({ type: "comment", comment: request.comment })
+      );
+      sendResponse({ status: "sent" });
+    } else {
+      console.error("WebSocket is not connected");
+      sendResponse({ status: "error", message: "WebSocket is not connected" });
+    }
   }
 });
 
