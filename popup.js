@@ -15,6 +15,7 @@ function sendComment() {
   const comment = document.getElementById("commentInput").value;
   chrome.runtime.sendMessage({ type: "comment", comment }, function (response) {
     console.log(response.status);
+    console.log(comment);
     //状態を送る
     updateStatus(response);
   });

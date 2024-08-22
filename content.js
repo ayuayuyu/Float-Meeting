@@ -1,5 +1,6 @@
 window.addEventListener("showComment", (event) => {
   const comment = event.detail;
+  console.log(`content.js comment ${comment}`);
   displayComment(comment);
 });
 
