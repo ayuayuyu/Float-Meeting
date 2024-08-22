@@ -3,11 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <title>コメント送信</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="status"></div>
-    <input type="text" id="commentInput" placeholder="コメントを入力" />
-    <button id="sendButton">送信</button>
+    <form class="form" id="form">
+      <input
+        type="text"
+        id="commentInput"
+        placeholder="コメントを入力"
+        autofocus
+      />
+      <button type="submit" class="send" id="sendButton">送信</button>
+    </form>
 
     <script src="popup.js"></script>
   </body>

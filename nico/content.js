@@ -5,14 +5,17 @@ window.addEventListener("showComment", (event) => {
 
 function displayComment(comment) {
   const commentElement = document.createElement("div");
+  const min = window.innerHeight * 0.2; // 上部20%
+  const max = window.innerHeight * 0.8; // 下部80%
   commentElement.textContent = comment;
   commentElement.style.position = "fixed";
-  commentElement.style.top = `${Math.random() * window.innerHeight}px`;
+  commentElement.style.zIndex = "1000";
+  commentElement.style.top = `${Math.random() * (max - min) + min}px`;
   commentElement.style.right = "0px";
   commentElement.style.whiteSpace = "nowrap";
   commentElement.style.fontSize = "24px";
   commentElement.style.color = "#ffffff";
-  commentElement.style.textShadow = "2px 2px 4px #000000";
+  commentElement.style.textShadow = "3px 3px 4px #000000";
   document.body.appendChild(commentElement);
 
   const move = () => {

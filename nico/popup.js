@@ -1,34 +1,37 @@
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("sendButton").addEventListener("click", () => {
-    let comment = document.getElementById("commentInput").value;
-    chrome.runtime.sendMessage(
-      { type: "comment", comment },
-      function (response) {
-        console.log(response.status);
-        updateStatus(response);
-      }
-    );
-    // テキストフィールドをクリア
-    document.getElementById("commentInput").value = "";
-  });
-  console.log("読み込まれた");
+const send = document.getElementById("sendButton");
+const form = document.getElementById("form");
+
+send.addEventListener("click", () => {
+  sendComment();
 });
 
+//Enter、returnで送信
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+});
+
+//コメントを送る関数
+function sendComment() {
+  const comment = document.getElementById("commentInput").value;
+  chrome.runtime.sendMessage({ type: "comment", comment }, function (response) {
+    console.log(response.status);
+    //状態を送る
+    updateStatus(response);
+  });
+  // テキストフィールドをクリア
+  document.getElementById("commentInput").value = "";
+}
 // ステータスを更新する関数
 function updateStatus(res) {
   const statusElement = document.getElementById("status");
-  console.log("fist");
   if (res.status === "sent") {
-    console.log("connected");
-    statusElement.textContent = "接続";
+    statusElement.textContent = "接続中";
     statusElement.style.color = "green";
   } else if (res.message === "WebSocket is not connected") {
-    console.log("disconnected");
     statusElement.textContent = "未接続";
     statusElement.style.color = "red";
   } else if (res.status === "error") {
-    console.log("erro");
-    statusElement.textContent = `Error: ${error}`;
+    statusElement.textContent = "Error";
     statusElement.style.color = "red";
   }
 }
