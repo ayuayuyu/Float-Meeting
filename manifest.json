@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "NicoNico",
+  "name": "niconico-comment",
   "version": "1.0",
   "permissions": ["activeTab", "scripting", "background"],
   "background": {
