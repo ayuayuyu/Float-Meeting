@@ -1,14 +1,13 @@
-let websocket;
+const URL = "wss://fastapi-websocket-ww61.onrender.com/ws/";
+const ws = new WebSocket(URL);
 
 chrome.runtime.onInstalled.addListener(() => {
-  websocket = new WebSocket("wss://fastapi-websocket-ww61.onrender.com/ws/");
-
-  websocket.onopen = () => {
+  ws.onopen = () => {
     console.log("WebSocket connection opened");
     sendMessageToPopup({ type: "status", status: "connected" });
   };
 
-  websocket.onmessage = (event) => {
+  ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
     if (data.type === "comment") {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -23,7 +22,7 @@ chrome.runtime.onInstalled.addListener(() => {
     }
   };
 
-  websocket.onerror = (error) => {
+  ws.onerror = (error) => {
     console.error("WebSocket error:", error);
     sendMessageToPopup({
       type: "status",
@@ -32,7 +31,7 @@ chrome.runtime.onInstalled.addListener(() => {
     });
   };
 
-  websocket.onclose = () => {
+  ws.onclose = () => {
     console.log("WebSocket connection closed");
     sendMessageToPopup({ type: "status", status: "disconnected" });
   };
@@ -40,10 +39,10 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === "comment") {
-    if (websocket && websocket.readyState === WebSocket.OPEN) {
+    if (ws && ws.readyState === WebSocket.OPEN) {
       Promise.resolve()
         .then(() => {
-          websocket.send(
+          ws.send(
             JSON.stringify({ type: "comment", comment: request.comment })
           );
         })

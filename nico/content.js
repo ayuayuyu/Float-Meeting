@@ -5,8 +5,8 @@ window.addEventListener("showComment", (event) => {
 
 function displayComment(comment) {
   const commentElement = document.createElement("div");
-  const min = window.innerHeight * 0.2; // 上部20%
-  const max = window.innerHeight * 0.8; // 下部80%
+  const min = window.innerHeight * 0.05; // 上部5%
+  const max = window.innerHeight * 0.95; // 下部95%
   commentElement.textContent = comment;
   commentElement.style.position = "fixed";
   commentElement.style.zIndex = "1000";
