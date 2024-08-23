@@ -4,4 +4,4 @@
 - chrome拡張機能`chrome://extensions/`
 - デベロッパー モードをONにする
 - パッケージ化されていない拡張機能を読み込むを押す
-- niconico-commentフォルダを選択する
+- Float-Meetingtフォルダを選択する
