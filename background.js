@@ -1,4 +1,4 @@
-const URL = "wss://fastapi-websocket-ww61.onrender.com/ws/";
+const URL = process.env.API_URL;
 const ws = new WebSocket(URL);
 
 chrome.runtime.onInstalled.addListener(() => {
